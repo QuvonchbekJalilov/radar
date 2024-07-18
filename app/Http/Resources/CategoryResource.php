@@ -18,7 +18,7 @@ class CategoryResource extends JsonResource
             'name_uz' => $this->name_uz,
             'name_ru' => $this->name_ru,
             'name_en' => $this->name_en,
-            'image' => $this->image,
+            'image' => "https://www.work.dora.uz/public/storage/".$this->image,
         ];
     }
 }

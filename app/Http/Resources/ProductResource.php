@@ -17,9 +17,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'category' => new CategoryResource($this->category), // Use the relationship directly
-            'brand_uz' => $this->brand_uz, 
-            'brand_ru' => $this->brand_ru,
-            'brand_en' => $this->brand_en, 
+            'brand_id' => new BrandResource($this->brand), // Use the relationship directly
             'name_uz' => $this->name_uz, 
             'name_ru' => $this->name_ru, 
             'name_en' => $this->name_en,
@@ -28,7 +26,7 @@ class ProductResource extends JsonResource
             'description_en' => $this->description_en, 
             'price' => $this->price, 
             'stock' => $this->stock, 
-            'image' => $this->image, 
+            'image' => "https://www.work.dora.uz/public/storage/".$this->image, 
             'status' => $this->status,
         ];
     }

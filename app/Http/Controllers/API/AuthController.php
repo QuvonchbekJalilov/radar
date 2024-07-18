@@ -29,6 +29,8 @@ class AuthController extends Controller
 
         // Process phone number (remove spaces)
         $phoneNumber = str_replace(' ', '', $request->phone_number);
+        $phoneNumber = str_replace(')','',$phoneNumber);
+        $phoneNumber = str_replace('(','',$phoneNumber);
 
         // Handle image upload if provided
         $imagePath = null;
@@ -77,7 +79,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
 
-            return response()->json(['token' => $token], 200);
+            return response()->json(['token' => $token, 'user' => $user], 200);
         }
 
         throw ValidationException::withMessages([

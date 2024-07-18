@@ -13,8 +13,10 @@ use Yajra\DataTables\DataTables;
 class UserController extends Controller
 {
 
-
-
+    public function index(){
+        $user = Auth::user();
+        return $this->response($user);
+    }
 
     public function updateAddress(Request $request)
     {
