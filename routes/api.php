@@ -18,8 +18,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('users')->group(function () {
+        Route::post('/change/password', [UserController::class, 'changePassword']);
         Route::get('/address', [UserController::class, 'getAddress']);
-        Route::get('/', [UserController::class, 'index'])->name('api.users.index');
+        Route::get('user', [UserController::class, 'index'])->name('api.users.index');
         Route::post('/', [UserController::class, 'store'])->name('api.users.store');
         Route::put('/update', [UserController::class, 'update'])->name('api.users.update');
         Route::delete('{id}', [UserController::class, 'destroy'])->name('api.users.destroy');

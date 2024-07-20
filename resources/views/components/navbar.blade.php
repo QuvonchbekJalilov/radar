@@ -46,23 +46,23 @@
 
             <li class="dropdown d-none d-md-inline-block">
                 <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="/assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="18">
+                    <img src="{{__('main.flag')}}" alt="user-image" class="me-0 me-sm-1" height="18">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
 
                     <!-- item-->
                     <a href="/uz" class="dropdown-item">
-                        <img src="/assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Uzb</span>
+                        <img src="/assets/images/flags/uzb.png" alt="user-image" class="me-1" height="10"> <span class="align-middle">Uzb</span>
                     </a>
 
                     <!-- item-->
                     <a href="/ru" class="dropdown-item">
-                        <img src="/assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Rus</span>
+                        <img src="/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Rus</span>
                     </a>
 
                     <!-- item-->
                     <a href="/en" class="dropdown-item">
-                        <img src="/assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Eng</span>
+                        <img src="/assets/images/flags/us.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Eng</span>
                     </a>
 
 

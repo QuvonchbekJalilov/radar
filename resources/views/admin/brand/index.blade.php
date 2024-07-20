@@ -55,11 +55,13 @@ $lang = App::getLocale();
                                         <tr>
                                             <th>ID</th>
                                             <th>{{ __('main.name') }}</th>
+                                            <th>Rasm</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
+                                    @foreach ($brands as $brand)
+
                                     <tbody>
-                                        @foreach ($brands as $brand)
 
                                         <th>
                                             {{ $brand->id}}
@@ -67,6 +69,7 @@ $lang = App::getLocale();
                                         <th>
                                             {{ $brand['title_'.App::getLocale()]}}
                                         </th>
+                                        <th><img src="/storage/{{$brand->image}}" width="100px" alt=""></th>
                                         <th>
                                             <a href="{{ route('brands.edit', ['brand' => $brand->id]) }}" class="icon-container"><i class="mdi mdi-book-edit-outline fs-3"></i></a>
                                             <a href="{{ route('brands.show', ['brand' => $brand->id]) }}" class="icon-container"><i class="mdi mdi-eye fs-3"></i></a>
@@ -76,8 +79,9 @@ $lang = App::getLocale();
                                                 <button type="submit" style="border: none; background: none; cursor: pointer;" class="icon-container"><i class="mdi mdi-trash-can-outline fs-3" style="color: #346ee0;"></i></button>
                                             </form>
                                         </th>
-                                        @endforeach
                                     </tbody>
+                                    @endforeach
+
                                 </table>
                             </div> <!-- End card-body -->
                         </div> <!-- End card -->

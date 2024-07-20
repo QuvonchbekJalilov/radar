@@ -94,7 +94,7 @@ class ProductController extends Controller
 
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin.product.edit', compact('product', 'categories', 'brends'));
+        return view('admin.product.edit', compact('product', 'categories', 'brands'));
     }
 
     /**

@@ -51,7 +51,7 @@ Route::middleware(['checkAdmin:admin', 'auth'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('brands', BrandController::class);
         // routes/web.php
-Route::get('/brands/data', [BrandController::class, 'getData'])->name('brands.data');
+        Route::get('/brands/data', [BrandController::class, 'getData'])->name('brands.data');
 
         Route::resource('product', ProductController::class);
         Route::resource('user', UserController::class);

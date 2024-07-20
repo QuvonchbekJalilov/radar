@@ -12,8 +12,9 @@ use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
-
-    public function index(){
+    public function index()
+    {
+        dd('salom');
         $user = Auth::user();
         return $this->response($user);
     }
@@ -46,7 +47,6 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User address updated successfully.'], 200);
     }
-
 
     public function update(Request $request)
     {
@@ -90,12 +90,32 @@ class UserController extends Controller
         return response()->json(['message' => 'User updated successfully.', 'user' => $user], 200);
     }
 
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
 
         return response()->json(['message' => 'User deleted successfully.'], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        
+        // $request->validate([
+        //     'old_password' => 'required|min:8',
+        //     'password' => 'required|min:8|confirmed', // Ensures password confirmation
+        // ]);
+
+        $user = Auth::user();
+        // Verify old password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['error' => 'Old password is incorrect.'], 422);
+        }
+
+        // Update to new password
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(['message' => 'Password changed successfully.'], 200);
     }
 }

@@ -16,25 +16,25 @@ class MainController extends Controller
     public function category()
     {
         $categories = Category::all();
-        return CategoryResource::collection($categories);
+        return $this->response(CategoryResource::collection($categories));
     }
 
     public function brand()
     {
         $brands = Brand::all();
 
-        return BrandResource::collection($brands);
+        return $this->response(BrandResource::collection($brands));
     }
     public function product()
     {
         $products = Product::paginate(20);
-        return ProductResource::collection($products);
+        return $this->response(ProductResource::collection($products));
     }
 
 
     public function productCategory($category)
     {
         $products = Product::where('category_id', $category)->paginate(20);
-        return ProductResource::collection($products);
+        return $this->response(ProductResource::collection($products));
     }
 }
