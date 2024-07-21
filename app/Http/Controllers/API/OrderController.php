@@ -25,9 +25,9 @@ class OrderController extends Controller
         ]);
 
         $user = Auth::user();
-        
-        if(!$user->addresses){
-            return $this->error('please enter address');
+
+        if (!$user->addresses) {
+            return $this->error('Please enter address.');
         }
 
         DB::beginTransaction();
@@ -42,7 +42,7 @@ class OrderController extends Controller
                 'shipping_method' => $request->shipping_method,
                 'payment_status' => "to'lanmagan",
                 'shipping_status' => 'yetkazilmoqda',
-                'status' => 'yangi',
+                'status' => 'new',
                 'order_date' => now(),
             ]);
 
@@ -52,11 +52,25 @@ class OrderController extends Controller
             foreach ($request->products as $productData) {
                 $product = Product::find($productData['id']);
                 $quantity = $productData['quantity'];
+
+                // Check if there is enough stock
+                if ($product->stock < $quantity) {
+                    DB::rollBack();
+                    return response()->json(['message' => "Not enough stock for product {$product->name}"], 400);
+                }
+
+                // Calculate total amount
                 $totalAmount += $product->price * $quantity;
 
+                // Attach product to order and adjust stock
                 $order->products()->attach($product->id, ['quantity' => $quantity]);
+
+                // Decrease product stock
+                $product->stock -= $quantity;
+                $product->save();
             }
 
+            // Update order total amount
             $order->total_amount = $totalAmount;
             $order->save();
 
@@ -69,6 +83,7 @@ class OrderController extends Controller
         }
     }
 
+
     public function getOrder($id)
     {
         $order = Order::with('products', 'user', 'address')->findOrFail($id);
@@ -79,7 +94,7 @@ class OrderController extends Controller
     public function getUserOrders()
     {
         $user = Auth::user();
-        $orders = $user->orders()->with('address','products', 'address')->get();
+        $orders = $user->orders()->with('address', 'products', 'address')->get();
 
         return response()->json(['orders' => $orders], 200);
     }

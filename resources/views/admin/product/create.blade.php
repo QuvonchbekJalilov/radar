@@ -73,28 +73,7 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Brand Names -->
-                                    <div class="mb-3 lang-section lang-uz">
-                                        <label for="brand_uz" class="form-label">Brand (Uzbek)</label>
-                                        <input type="text" name="brand_uz" id="brand_uz" class="form-control @error('brand_uz') is-invalid @enderror" value="{{ old('brand_uz') }}" required>
-                                        @error('brand_uz')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3 lang-section lang-ru d-none">
-                                        <label for="brand_ru" class="form-label">Brand (Russian)</label>
-                                        <input type="text" name="brand_ru" id="brand_ru" class="form-control @error('brand_ru') is-invalid @enderror" value="{{ old('brand_ru') }}" required>
-                                        @error('brand_ru')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3 lang-section lang-en d-none">
-                                        <label for="brand_en" class="form-label">Brand (English)</label>
-                                        <input type="text" name="brand_en" id="brand_en" class="form-control @error('brand_en') is-invalid @enderror" value="{{ old('brand_en') }}" required>
-                                        @error('brand_en')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    
 
                                     <!-- Product Names -->
                                     <div class="mb-3 lang-section lang-uz">
@@ -219,9 +198,8 @@
                                     </div>
 
                                     <!-- Submit Button -->
-                                    <div class="mb-3">
-                                        <button type="submit" class="btn btn-success">Create Product</button>
-                                    </div>
+                                    <button type="submit" class="btn btn-primary">Saqlash</button>
+                                    <a href="{{ route('product.index') }}" class="btn btn-secondary">Bekor qilish</a>
 
                                 </form>
                             </div>

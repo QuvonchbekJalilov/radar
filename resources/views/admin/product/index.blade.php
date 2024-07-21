@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\App;
 $lang = App::getLocale();
 ?>
 <x-layouts.admin>
+    <style>
+        /* In your CSS file or <style> block */
+        #product-datatable tbody {
+            background-color: transparent !important;
+        }
+    </style>
     <!-- Include jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -60,7 +66,9 @@ $lang = App::getLocale();
                                         </tr>
                                     </thead>
                                     <tbody>
+
                                     </tbody>
+
                                 </table>
                             </div> <!-- End card-body -->
                         </div> <!-- End card -->
@@ -82,7 +90,7 @@ $lang = App::getLocale();
                     </div>
                     <div class="col-md-6">
                         <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end">
-                            <p class="mb-0">Design & Develop by <a href="https://myrathemes.com/" target="_blank">MyraStudio</a></p>
+                            <p class="mb-0">Design & Develop by <a href="https://dora.uz/" target="_blank">Dora</a></p>
                         </div>
                     </div>
                 </div>
@@ -129,5 +137,5 @@ $lang = App::getLocale();
         });
     </script>
 
-   
+
 </x-layouts.admin>

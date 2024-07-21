@@ -36,10 +36,10 @@
                 <!-- End page title -->
 
                 <!-- Button to add order -->
-                <a href="{{ route('order.create') }}" class="btn btn-primary">
+                <!-- <a href="{{ route('order.create') }}" class="btn btn-primary">
                     <i class="feather-plus me-2"></i>
                     <span>Buyurtma qo'shish</span>
-                </a>
+                </a> -->
 
                 <!-- DataTable container -->
                 <div class="row">
@@ -64,21 +64,17 @@
                                         <th>{{ $order->user->first_name }} {{ $order->user->last_name }}</th>
                                         <th>@foreach($order->products as $product) {{ $product->name_uz }}, @endforeach</th>
                                         <th>{{ $order->total_amount }}</th>
-                                        <th>
-                                            <select class="form-select payment-status" data-id="{{ $order->id }}">
-                                                <option value="to'lanmagan" {{ $order->payment_status == "to'lanmagan" ? 'selected' : '' }} style="color:white; background-color: red">To'lanmagan</option>
-                                                <option value="to'langan" {{ $order->payment_status == "to'langan" ? 'selected' : '' }} style="color:white; background-color: green">To'langan</option>
-                                            </select>
+                                        <th> 
+                                            @if ($order->payment_status == "to'lanmagan" )
+                                             <p style="background-color: green; color: white; text-align: center; padding: 10px;" >{{ $order->payment_status }}</p>
+                                            @elseif ($order->payment_status == "to'langan" )
+                                            <p style="background-color: red; color: white; text-align: center; padding: 10px;">{{ $order->payment_status }}</p>
+                                            @endif
                                         </th>
                                         <th>
-                                            <select class="form-select shipping-status" data-id="{{ $order->id }}">
-                                                <option value="yetkazilmoqda" {{ $order->shipping_status == "yetkazilmoqda" ? 'selected' : '' }}>Yetkazilmoqda</option>
-                                                <option value="yo'lda" {{ $order->shipping_status == "yo'lda" ? 'selected' : '' }}>Yo'lda</option>
-                                                <option value="yetkazildi" {{ $order->shipping_status == "yetkazildi" ? 'selected' : '' }}>Yetkazildi</option>
-                                            </select>
+                                            {{ $order->shipping_status}}
                                         </th>
                                         <th>
-                                            <a href="{{ route('order.edit', ['order' => $order->id]) }}" class="icon-container"><i class="mdi mdi-book-edit-outline fs-3"></i></a>
                                             <a href="{{ route('order.show', ['order' => $order->id]) }}" class="icon-container"><i class="mdi mdi-eye fs-3"></i></a>
                                             <form action="{{ route('order.destroy', ['order' => $order->id]) }}" method="POST" style="display: inline;" onsubmit="return confirm('Ochirishga ruxsat berasizmi')">
                                                 @csrf
@@ -110,7 +106,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end">
-                            <p class="mb-0">Design & Develop by <a href="https://myrathemes.com/" target="_blank">MyraStudio</a></p>
+                        <p class="mb-0">Design & Develop by <a href="https://dora.uz/" target="_blank">Dora</a></p>
                         </div>
                     </div>
                 </div>

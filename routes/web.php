@@ -39,7 +39,7 @@ Route::get('products/data', [ProductController::class, 'getData'])->name('produc
 Route::get('users/data', [UserController::class, 'getData'])->name('users.data');
 Route::get('orders/data', [OrderController::class, 'data'])->name('orders.data');
 Route::get('users/{user}/edit-address', [UserController::class, 'editAddress'])->name('user.edit-address');
-Route::post('users/{user}/update-address', [UserController::class, 'updateAddress'])->name('user.update-address');
+Route::put('users/{user}/update-address', [UserController::class, 'updateAddress'])->name('user.update-address');
 Route::get('orders/data', [OrderController::class, 'data'])->name('orders.data');
 Route::post('/order/update-payment-status', [OrderController::class, 'updatePaymentStatus'])->name('order.updatePaymentStatus');
 Route::post('/order/update-shipping-status', [OrderController::class, 'updateShippingStatus'])->name('order.updateShippingStatus');
@@ -51,7 +51,7 @@ Route::middleware(['checkAdmin:admin', 'auth'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('brands', BrandController::class);
         // routes/web.php
-        Route::get('/brands/data', [BrandController::class, 'getData'])->name('brands.data');
+Route::get('/brands/data', [BrandController::class, 'getData'])->name('brands.data');
 
         Route::resource('product', ProductController::class);
         Route::resource('user', UserController::class);

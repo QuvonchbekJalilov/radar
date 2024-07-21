@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\Specification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
@@ -28,7 +29,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin.product.create', compact('categories','brands'));
+        return view('admin.product.create', compact('categories', 'brands'));
     }
 
     /**
@@ -89,29 +90,34 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-
+        $product = Product::with('specifications')->findOrFail($id);
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admin.product.edit', compact('product', 'categories', 'brands'));
+        $specifications = $product->specifications; // Load specifications
+
+        return view('admin.product.edit', compact('product', 'categories', 'brands', 'specifications'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         // Update the main product image if a new one is uploaded
         if ($request->hasFile('image')) {
-            // Delete the old image
-            Storage::disk('public')->delete($product->image);
-
+            // Delete the old image if it exists
+            if ($product->image) {
+                Storage::delete($product->image);
+            }
+    
             // Store the new image
             $imagePath = $request->file('image')->store('images', 'public');
             $product->image = $imagePath;
         }
-
+    
         // Update the product details
         $product->update([
             'category_id' => $request->category_id,
@@ -126,11 +132,11 @@ class ProductController extends Controller
             'stock' => $request->stock,
             'status' => $request->status,
         ]);
-
+    
         // Store new gallery images if any
         if ($request->hasFile('gallery_images')) {
             $product->galleries()->delete(); // Delete existing galleries if needed
-
+    
             foreach ($request->file('gallery_images') as $galleryImage) {
                 $galleryImagePath = $galleryImage->store('gallery', 'public');
                 Gallery::create([
@@ -139,19 +145,31 @@ class ProductController extends Controller
                 ]);
             }
         }
-
-
-        if ($request->specifications) {
+    
+        // Ensure specifications is an array and process it
+        $specifications = $request->input('specifications', []);
+    
+        if (!empty($specifications)) {
             $product->specifications()->delete(); // Delete existing specifications if needed
-
-            foreach ($request->specifications as $specData) {
-                $specification = new Specification($specData);
-                $product->specifications()->save($specification);
+    
+            foreach ($specifications as $specData) {
+                // Check if both attribute_name and attribute_value are present
+                if (isset($specData['attribute_name']) && isset($specData['attribute_value'])) {
+                    $specification = new Specification([
+                        'attribute_name' => $specData['attribute_name'],
+                        'attribute_value' => $specData['attribute_value']
+                    ]);
+                    $product->specifications()->save($specification);
+                }
             }
         }
-
-        return redirect()->route('product.index')->with('success', 'Mahsulot muvaffaqiyatli tahrirlandi!');
+    
+        return redirect()->route('product.index')->with('success', 'Product updated successfully!');
     }
+    
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -164,11 +182,11 @@ class ProductController extends Controller
 
         // Delete the product itself
         $product->delete();
-        if($product->image){
+        if ($product->image) {
             Storage::delete($product->image);
         }
 
-        foreach($product->galleries() as $gallery){
+        foreach ($product->galleries() as $gallery) {
             Storage::delete($gallery->image);
         }
 

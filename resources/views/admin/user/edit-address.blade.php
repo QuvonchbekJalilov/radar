@@ -33,38 +33,39 @@
                             <div class="card-body">
                                 <form action="{{ route('user.update-address', $user->id) }}" method="POST">
                                     @csrf
+                                    @method("PUT")
                                     <div class="mb-3">
                                         <label for="longitude" class="form-label">Longitude</label>
-                                        <input type="text" id="longitude" name="longitude" class="form-control" value="{{ old('longitude') }}">
+                                        <input type="text" id="longitude" name="longitude" class="form-control" value="{{ $address->longitude ?? null }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="latitude" class="form-label">Latitude</label>
-                                        <input type="text" id="latitude" name="latitude" class="form-control" value="{{ old('latitude') }}">
+                                        <input type="text" id="latitude" name="latitude" class="form-control" value="{{ $address->latitude ?? null }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="region" class="form-label">Region</label>
-                                        <input type="text" id="region" name="region" class="form-control" value="{{ old('region') }}">
+                                        <input type="text" id="region" name="region" class="form-control" value="{{ $address->region ?? null }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="district" class="form-label">District</label>
-                                        <input type="text" id="district" name="district" class="form-control" value="{{ old('district') }}">
+                                        <input type="text" id="district" name="district" class="form-control" value="{{ $address->district ?? null }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="street" class="form-label">Street</label>
-                                        <input type="text" id="street" name="street" class="form-control" value="{{ old('street') }}">
+                                        <input type="text" id="street" name="street" class="form-control" value="{{ $address->street  ?? null }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="home" class="form-label">Home</label>
-                                        <input type="text" id="home" name="home" class="form-control" value="{{ old('home') }}">
+                                        <input type="text" id="home" name="home" class="form-control" value="{{ $address->home ?? null }}">
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save Address</button>
-                                    <a href="{{ route('user.index') }}" class="btn btn-secondary">Back to Users</a>
+                                    <button type="submit" class="btn btn-primary">Yangilash</button>
+                                    <a href="{{ route('user.index') }}" class="btn btn-secondary">Bekor qilish</a>
                                 </form>
                             </div> <!-- End card-body -->
                         </div> <!-- End card -->
@@ -86,7 +87,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end">
-                            <p class="mb-0">Design & Develop by <a href="https://myrathemes.com/" target="_blank">MyraStudio</a></p>
+                            <p class="mb-0">Design & Develop by <a href="https://dora.uz/" target="_blank">Dora</a></p>
                         </div>
                     </div>
                 </div>

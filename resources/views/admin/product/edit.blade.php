@@ -10,7 +10,7 @@
                 <div class="py-3 py-lg-4">
                     <div class="row">
                         <div class="col-lg-6">
-                            <h4 class="page-title mb-0">Edit Product - {{ $product->name_uz }}</h4>
+                            <h4 class="page-title mb-0">Edit Product</h4>
                         </div>
                         <div class="col-lg-6">
                             <div class="d-none d-lg-block">
@@ -24,9 +24,9 @@
                         <div class="col-lg-12">
                             <div class="d-none d-lg-block">
                                 <ol class="breadcrumb m-0 float-end">
-                                    <button class="btn" onClick="changeLang('uz')" style="background: #0c4a4a ; color: white;">UZ</button>
+                                    <button class="btn" onClick="changeLang('uz')" style="background: #0c4a4a; color: white;">UZ</button>
                                     <button class="btn" onClick="changeLang('ru')" style="background-color: #0c4a6e; color: white;">RU</button>
-                                    <button class="btn" onClick="changeLang('en')" style="background-color: #0c4a8e;color: white;">EN</button>
+                                    <button class="btn" onClick="changeLang('en')" style="background-color: #0c4a8e; color: white;">EN</button>
                                 </ol>
                             </div>
                         </div>
@@ -58,13 +58,15 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <!-- Brand -->
                                     <div class="mb-3">
                                         <label for="brand_id" class="form-label">Brand</label>
                                         <select name="brand_id" id="brand_id" class="form-select @error('brand_id') is-invalid @enderror" required>
                                             <option value="">Select Brand</option>
-                                            @foreach ($brands as $category)
-                                            <option value="{{ $category->id }}" {{ old('brand_id') == $category->id ? 'selected' : '' }}>
-                                                {{ $category->title_uz }}
+                                            @foreach ($brands as $brand)
+                                            <option value="{{ $brand->id }}" {{ $product->brand_id == $brand->id ? 'selected' : '' }}>
+                                                {{ $brand->title_uz }}
                                             </option>
                                             @endforeach
                                         </select>
@@ -73,26 +75,24 @@
                                         @enderror
                                     </div>
 
-                                    
-
                                     <!-- Product Names -->
                                     <div class="mb-3 lang-section lang-uz">
                                         <label for="name_uz" class="form-label">Product Name (Uzbek)</label>
-                                        <input type="text" name="name_uz" id="name_uz" class="form-control @error('name_uz') is-invalid @enderror" value="{{ $product->name_uz }}" required>
+                                        <input type="text" name="name_uz" id="name_uz" class="form-control @error('name_uz') is-invalid @enderror" value="{{ old('name_uz', $product->name_uz) }}" required>
                                         @error('name_uz')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="mb-3 lang-section lang-ru">
+                                    <div class="mb-3 lang-section lang-ru d-none">
                                         <label for="name_ru" class="form-label">Product Name (Russian)</label>
-                                        <input type="text" name="name_ru" id="name_ru" class="form-control @error('name_ru') is-invalid @enderror" value="{{ $product->name_ru }}" required>
+                                        <input type="text" name="name_ru" id="name_ru" class="form-control @error('name_ru') is-invalid @enderror" value="{{ old('name_ru', $product->name_ru) }}" required>
                                         @error('name_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="mb-3 lang-section lang-en">
+                                    <div class="mb-3 lang-section lang-en d-none">
                                         <label for="name_en" class="form-label">Product Name (English)</label>
-                                        <input type="text" name="name_en" id="name_en" class="form-control @error('name_en') is-invalid @enderror" value="{{ $product->name_en }}" required>
+                                        <input type="text" name="name_en" id="name_en" class="form-control @error('name_en') is-invalid @enderror" value="{{ old('name_en', $product->name_en) }}" required>
                                         @error('name_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -101,21 +101,21 @@
                                     <!-- Descriptions -->
                                     <div class="mb-3 lang-section lang-uz">
                                         <label for="description_uz" class="form-label">Description (Uzbek)</label>
-                                        <textarea name="description_uz" id="description_uz" class="form-control @error('description_uz') is-invalid @enderror" rows="3" required>{{ $product->description_uz }}</textarea>
+                                        <textarea name="description_uz" id="description_uz" class="form-control @error('description_uz') is-invalid @enderror" rows="3" required>{{ old('description_uz', $product->description_uz) }}</textarea>
                                         @error('description_uz')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="mb-3 lang-section lang-ru">
+                                    <div class="mb-3 lang-section lang-ru d-none">
                                         <label for="description_ru" class="form-label">Description (Russian)</label>
-                                        <textarea name="description_ru" id="description_ru" class="form-control @error('description_ru') is-invalid @enderror" rows="3" required>{{ $product->description_ru }}</textarea>
+                                        <textarea name="description_ru" id="description_ru" class="form-control @error('description_ru') is-invalid @enderror" rows="3" required>{{ old('description_ru', $product->description_ru) }}</textarea>
                                         @error('description_ru')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="mb-3 lang-section lang-en">
+                                    <div class="mb-3 lang-section lang-en d-none">
                                         <label for="description_en" class="form-label">Description (English)</label>
-                                        <textarea name="description_en" id="description_en" class="form-control @error('description_en') is-invalid @enderror" rows="3" required>{{ $product->description_en }}</textarea>
+                                        <textarea name="description_en" id="description_en" class="form-control @error('description_en') is-invalid @enderror" rows="3" required>{{ old('description_en', $product->description_en) }}</textarea>
                                         @error('description_en')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -124,7 +124,7 @@
                                     <!-- Price -->
                                     <div class="mb-3">
                                         <label for="price" class="form-label">Price</label>
-                                        <input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror" value="{{ $product->price }}" step="0.01" required>
+                                        <input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $product->price) }}" step="0.01" required>
                                         @error('price')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -133,7 +133,7 @@
                                     <!-- Stock -->
                                     <div class="mb-3">
                                         <label for="stock" class="form-label">Stock</label>
-                                        <input type="number" name="stock" id="stock" class="form-control @error('stock') is-invalid @enderror" value="{{ $product->stock }}" required>
+                                        <input type="number" name="stock" id="stock" class="form-control @error('stock') is-invalid @enderror" value="{{ old('stock', $product->stock) }}" required>
                                         @error('stock')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -148,7 +148,7 @@
                                         @enderror
                                         <div class="mt-2" id="imagePreview">
                                             @if ($product->image)
-                                                <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" style="max-width: 100px;">
+                                            <img src="{{ asset('storage/' . $product->image) }}" style="max-width: 100px;">
                                             @endif
                                         </div>
                                     </div>
@@ -161,20 +161,47 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div class="mt-2" id="galleryPreview">
-                                            @foreach ($product->galleries as $image)
-                                                <div class="mb-2">
-                                                    <img src="{{ asset('storage/' . $image->image) }}" alt="Gallery Image" style="max-width: 100px;">
-                                                    <button type="button" class="btn btn-danger btn-sm remove-image">Remove</button>
-                                                </div>
+                                            @foreach ($product->galleries as $gallery)
+                                            <div class="mb-2">
+                                                <img src="{{ asset('storage/' . $gallery->image) }}" style="max-width: 100px;">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="removeGalleryImage({{ $gallery->id }})">Remove</button>
+                                            </div>
                                             @endforeach
                                         </div>
+                                    </div>
+
+                                    <!-- Specifications -->
+                                    <div class="mb-3">
+                                        <label for="specifications" class="form-label">Specifications</label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="specifications">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Attribute Name</th>
+                                                        <th>Attribute Value</th>
+                                                        <th>Action</th> <!-- Added column for delete button -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($product->specifications as $specification)
+                                                    <tr>
+                                                        <td><input type="text" name="specifications[{{ $loop->index }}][attribute_name]" class="form-control" value="{{ $specification->attribute_name }}"></td>
+                                                        <td><input type="text" name="specifications[{{ $loop->index }}][attribute_value]" class="form-control" value="{{ $specification->attribute_value }}"></td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-danger btn-sm delete-row">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <button type="button" class="btn btn-primary mt-3" id="addSpecification">Add Specification</button>
                                     </div>
 
                                     <!-- Status -->
                                     <div class="mb-3">
                                         <label for="status" class="form-label">Status</label>
                                         <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
-                                            <option value="">Select Status</option>
                                             <option value="active" {{ $product->status == 'active' ? 'selected' : '' }}>Active</option>
                                             <option value="inactive" {{ $product->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
                                         </select>
@@ -183,37 +210,9 @@
                                         @enderror
                                     </div>
 
-                                    <!-- Specifications -->
-                                    <div class="mb-3">
-                                        <label for="specifications" class="form-label">Specifications</label>
-                                        <table class="table" id="specifications">
-                                            <thead>
-                                                <tr>
-                                                    <th>Attribute Name</th>
-                                                    <th>Attribute Value</th>
-                                                    <th>Action</th> <!-- Added column for delete button -->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($product->specifications as $specification)
-                                                    <tr>
-                                                        <td><input type="text" name="specifications[{{ $loop->index }}][attribute_name]" class="form-control" value="{{ $specification->attribute_name }}"></td>
-                                                        <td><input type="text" name="specifications[{{ $loop->index }}][attribute_value]" class="form-control" value="{{ $specification->attribute_value }}"></td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-danger btn-sm delete-row">Delete</button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                        <button type="button" class="btn btn-primary mt-3" id="addSpecification">Add Specification</button>
-                                    </div>
-
                                     <!-- Submit Button -->
-                                    <div class="mb-3">
-                                        <button type="submit" class="btn btn-success">Update Product</button>
-                                    </div>
-
+                                    <button type="submit" class="btn btn-primary">Yangilash</button>
+                                    <a href="{{ route('product.index') }}" class="btn btn-secondary">Bekor qilish</a>
                                 </form>
                             </div>
                         </div>
@@ -221,127 +220,34 @@
                 </div>
                 <!-- End product form -->
 
-            </div> <!-- End container -->
-        </div> <!-- End px-3 -->
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div>
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script> © Dashtrap
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-none d-md-flex gap-4 align-item-center justify-content-md-end">
-                            <p class="mb-0">Design & Develop by <a href="https://myrathemes.com/" target="_blank">MyraStudio</a></p>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </footer> <!-- End footer -->
+        </div>
+    </div>
+    <!-- End page content -->
 
-    </div> <!-- End page-content -->
+    <!-- JavaScript to handle dynamic field addition and image preview -->
     <script>
-        // Function to preview main image
-        function previewImage(event) {
-            var image = document.getElementById('imagePreview');
-            image.innerHTML = ''; // Clear previous preview
-
-            var file = event.target.files[0];
-            var reader = new FileReader();
-
-            reader.onload = function() {
-                var imgElement = document.createElement('img');
-                imgElement.src = reader.result;
-                imgElement.style.maxWidth = '100px'; // Limit width to 100px for preview
-                image.appendChild(imgElement);
-            }
-
-            if (file) {
-                reader.readAsDataURL(file); // Read the image file as a data URL
-            }
-        }
-
-        // Function to preview gallery images
-        function previewGalleryImages(event) {
-            var gallery = document.getElementById('galleryPreview');
-            gallery.innerHTML = ''; // Clear previous preview
-
-            var files = event.target.files;
-
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                var reader = new FileReader();
-
-                reader.onload = (function(file) {
-                    return function(e) {
-                        var imgElement = document.createElement('img');
-                        imgElement.src = e.target.result;
-                        imgElement.style.maxWidth = '100px'; // Limit width to 100px for preview
-
-                        // Create remove button
-                        var removeButton = document.createElement('button');
-                        removeButton.type = 'button';
-                        removeButton.classList.add('btn', 'btn-danger', 'btn-sm', 'remove-image');
-                        removeButton.textContent = 'Remove';
-
-                        // Handle remove button click
-                        removeButton.addEventListener('click', function() {
-                            imgElement.remove(); // Remove the image preview
-                            removeButton.remove(); // Remove the remove button
-                            updateGalleryInput(); // Update form data
-                        });
-
-                        // Append image and remove button to preview div
-                        var previewItem = document.createElement('div');
-                        previewItem.classList.add('mb-2'); // Optional styling for spacing
-                        previewItem.appendChild(imgElement);
-                        previewItem.appendChild(removeButton);
-                        gallery.appendChild(previewItem);
-                    };
-                })(file);
-
-                if (file) {
-                    reader.readAsDataURL(file); // Read the image file as a data URL
-                }
-            }
-
-            // Function to update hidden input for gallery images
-            function updateGalleryInput() {
-                var galleryInput = document.getElementById('gallery_images');
-                var filesArray = Array.from(event.target.files);
-
-                // Filter out removed images
-                filesArray = filesArray.filter(function(file) {
-                    return !gallery.contains(document.querySelector(`img[src="${file}"]`));
-                });
-
-                // Update gallery input value with remaining images
-                galleryInput.value = filesArray.map(function(file) {
-                    return file.name;
-                });
-            }
+        function changeLang(lang) {
+            document.querySelectorAll('.lang-section').forEach(section => section.classList.add('d-none'));
+            document.querySelectorAll('.lang-' + lang).forEach(section => section.classList.remove('d-none'));
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             var specificationIndex = {{ count($product->specifications) }};
+
             var specificationsTable = document.getElementById('specifications');
             var addSpecificationButton = document.getElementById('addSpecification');
 
             // Add new row for specification
             addSpecificationButton.addEventListener('click', function() {
-                var newRow = specificationsTable.insertRow();
+                var newRow = specificationsTable.querySelector('tbody').insertRow();
                 newRow.innerHTML = `
-                <td><input type="text" name="specifications[${specificationIndex}][attribute_name]" class="form-control"></td>
-                <td><input type="text" name="specifications[${specificationIndex}][attribute_value]" class="form-control"></td>
-                <td>
-                    <button type="button" class="btn btn-danger btn-sm delete-row">Delete</button>
-                </td>
-            `;
+                    <td><input type="text" name="specifications[${specificationIndex}][attribute_name]" class="form-control" placeholder="Enter attribute name"></td>
+                    <td><input type="text" name="specifications[${specificationIndex}][attribute_value]" class="form-control" placeholder="Enter attribute value"></td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm delete-row">Remove</button>
+                    </td>
+                `;
                 specificationIndex++;
             });
 
@@ -352,39 +258,35 @@
                     row.remove();
                 }
             });
-
-            // Remove gallery image preview
-            document.querySelectorAll('.remove-image').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var previewItem = this.parentElement;
-                    var imgElement = previewItem.querySelector('img');
-                    var imageName = imgElement.getAttribute('src').split('/').pop(); // Extract image name
-                    var galleryInput = document.getElementById('gallery_images');
-                    var currentFiles = Array.from(galleryInput.files);
-
-                    // Remove from file list
-                    currentFiles = currentFiles.filter(function(file) {
-                        return file.name !== imageName;
-                    });
-
-                    // Update gallery input value
-                    galleryInput.value = currentFiles.map(function(file) {
-                        return file.name;
-                    });
-
-                    // Remove preview item
-                    previewItem.remove();
-                });
-            });
         });
 
-        function changeLang(lang) {
-            document.querySelectorAll('.lang-section').forEach(function(section) {
-                section.classList.add('d-none');
-            });
-            document.querySelectorAll('.lang-' + lang).forEach(function(section) {
-                section.classList.remove('d-none');
-            });
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('imagePreview');
+                output.innerHTML = `<img src="${reader.result}" style="max-width: 100px;">`;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function previewGalleryImages(event) {
+            const galleryPreview = document.getElementById('galleryPreview');
+            galleryPreview.innerHTML = '';
+            for (let i = 0; i < event.target.files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    galleryPreview.innerHTML += `<div class="mb-2">
+                        <img src="${e.target.result}" style="max-width: 100px;">
+                    </div>`;
+                }
+                reader.readAsDataURL(event.target.files[i]);
+            }
+        }
+
+        function removeGalleryImage(id) {
+            // Implement removal logic here, perhaps via AJAX
+            console.log('Remove gallery image with ID:', id);
+            // For example, send an AJAX request to delete the image on the server
         }
     </script>
 </x-layouts.admin>

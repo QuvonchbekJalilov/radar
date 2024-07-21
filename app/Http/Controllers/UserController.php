@@ -17,11 +17,13 @@ class UserController extends Controller
     public function editAddress($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.user.edit-address', compact('user'));
+        $address = User_address::where('user_id', $user->id)->first();
+        return view('admin.user.edit-address', compact('user', 'address'));
     }
 
     public function updateAddress(Request $request, $id)
     {
+        // Validate the request data
         $request->validate([
             'longitude' => 'nullable|string',
             'latitude' => 'nullable|string',
@@ -31,19 +33,39 @@ class UserController extends Controller
             'home' => 'nullable|string',
         ]);
 
+        // Find the user by ID
         $user = User::findOrFail($id);
-        $address = new User_address([
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-            'region' => $request->region,
-            'district' => $request->district,
-            'street' => $request->street,
-            'home' => $request->home,
-        ]);
 
-        $user->addresses()->save($address);
+        // Retrieve the existing address for the user
+        // Assuming there's only one address per user, adjust if there can be multiple addresses
+        $address = $user->addresses()->first();
 
-        return redirect()->route('user.index')->with('success', 'User address saved successfully.');
+        if ($address) {
+            // Update the existing address
+            $address->longitude = $request->longitude;
+            $address->latitude = $request->latitude;
+            $address->region = $request->region;
+            $address->district = $request->district;
+            $address->street = $request->street;
+            $address->home = $request->home;
+
+            // Save the updated address
+            $address->save();
+        } else {
+            // If the address does not exist, create a new one
+            $address = new User_address([
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude,
+                'region' => $request->region,
+                'district' => $request->district,
+                'street' => $request->street,
+                'home' => $request->home,
+            ]);
+            $user->addresses()->save($address);
+        }
+
+        // Redirect back to the user index with a success message
+        return redirect()->route('user.index')->with('success', 'User address updated successfully.');
     }
     public function index()
     {
