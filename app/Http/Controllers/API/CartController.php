@@ -19,7 +19,8 @@ class CartController extends Controller
     {
         $carts = auth()->user()->carts()->paginate(20);
 
-        return ProductResource::collection($carts);    }
+        return ProductResource::collection($carts);
+    }
 
     public function store(Request $request): JsonResponse
     {

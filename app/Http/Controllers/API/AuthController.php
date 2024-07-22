@@ -51,7 +51,7 @@ class AuthController extends Controller
         ]);
 
         // Return response
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        return response()->json(['message' => 'User registered successfully', 'user' => $user, 'success' => true], 201);
     }
 
     /**
@@ -79,7 +79,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('authToken')->plainTextToken;
 
-            return response()->json(['token' => $token, 'user' => $user], 200);
+            return response()->json(['token' => $token, 'user' => $user, 'success' => true], 200);
         }
 
         throw ValidationException::withMessages([
@@ -91,6 +91,6 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Logged out successfully'], 200);
+        return response()->json(['message' => 'Logged out successfully', 'success' => true], 200);
     }
 }
