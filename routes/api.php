@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\FavoriteController;
 use App\Http\Controllers\API\MainController;
 use App\Http\Controllers\API\OrderController;
@@ -31,6 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResources([
         'favourites' => FavoriteController::class,
     ]);
+    Route::apiResources([
+        'carts' => CartController::class,
+    ]);
 });
 
 
@@ -48,6 +52,7 @@ Route::get('/user/{user}/addresses', [UserAddressController::class, 'getUserAddr
 Route::get('/category', [MainController::class, 'category']);
 Route::get('/product', [MainController::class, 'product']);
 Route::get('/product/{category}', [MainController::class, 'productCategory']);
+Route::get('{id}/product', [MainController::class, 'singleProduct']);
 Route::get('/brand', [MainController::class, 'brand']);
 
 Route::post('payment/request', [PaymentController::class, 'handleRequest'])->name('payment.request');

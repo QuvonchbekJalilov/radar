@@ -37,4 +37,10 @@ class MainController extends Controller
         $products = Product::where('category_id', $category)->paginate(20);
         return $this->response(ProductResource::collection($products));
     }
+
+    public function singleProduct($id){
+
+        $product = Product::findOrFail($id);
+        return $this->response(new ProductResource($product));
+    }
 }

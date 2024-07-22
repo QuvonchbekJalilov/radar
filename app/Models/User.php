@@ -58,6 +58,15 @@ class User extends Authenticatable
     {
         return $this->favorites()->where('product_id', $favorite_id)->exists();
     }
+
+    public function carts()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+    public function hasCart($cart_id)
+    {
+        return $this->carts()->where('product_id', $cart_id)->exists();
+    }
     public function addresses()
     {
         return $this->hasMany(User_address::class);
