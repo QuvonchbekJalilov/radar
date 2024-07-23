@@ -26,18 +26,22 @@ class Product extends Model
         return $this->hasMany(Specification::class);
     }
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function brand(){
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
 
 
-    public function users(): BelongsToMany
+    public function users()
     {
-        return $this->belongsToMany(User::class);
+        // Specify the pivot table name and foreign key names
+        return $this->belongsToMany(User::class, 'cart_user', 'product_id', 'user_id');
     }
+
 
     public function orders()
     {

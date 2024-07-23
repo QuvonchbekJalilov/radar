@@ -14,7 +14,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        dd('salom');
         $user = Auth::user();
         return $this->response($user);
     }
@@ -45,7 +44,7 @@ class UserController extends Controller
             ]
         );
 
-        return response()->json(['message' => 'User address updated successfully.'], 200);
+        return response()->json(['message' => 'User address updated successfully.', 'success' => true], 200);
     }
 
     public function update(Request $request)
@@ -87,7 +86,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json(['message' => 'User updated successfully.', 'user' => $user], 200);
+        return response()->json(['message' => 'User updated successfully.', 'user' => $user, 'success' => true], 200);
     }
 
     public function destroy($id)
@@ -116,6 +115,6 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return response()->json(['message' => 'Password changed successfully.'], 200);
+        return response()->json(['message' => 'Password changed successfully.', 'success' => true], 200);
     }
 }

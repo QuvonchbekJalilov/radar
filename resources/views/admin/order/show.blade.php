@@ -44,9 +44,8 @@
                                 <div class="mb-3">
                                     <h6><strong>Address:</strong></h6>
                                     <p>
-                                        {{ $order->address->street }}, {{ $order->address->city }}<br>
-                                        {{ $order->address->state }}, {{ $order->address->postal_code }}<br>
-                                        {{ $order->address->country }}
+                                        {{ $order->region }}, {{ $order->district }}<br>
+                                        {{ $order->street }}, {{ $order->home }}<br>
                                     </p>
                                 </div>
                             </div>

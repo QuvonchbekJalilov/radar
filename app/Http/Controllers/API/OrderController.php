@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User_address;
@@ -16,7 +17,12 @@ class OrderController extends Controller
     public function placeOrder(Request $request)
     {
         $request->validate([
-            'address_id' => 'nullable|exists:user_addresses,id',
+            'longitude' => 'nullable',
+            'latitude' => 'nullable',
+            'region' => 'nullable',
+            'district' => 'nullable',
+            'street' => 'nullable',
+            'home' => 'nullable',
             'products' => 'required|array',
             'products.*.id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
@@ -33,10 +39,14 @@ class OrderController extends Controller
         DB::beginTransaction();
 
         try {
-            $address = $user->addresses()->first();
             $order = new Order([
                 'user_id' => $user->id,
-                'user_address_id' => $address->id,
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude,
+                'region' => $request->region,
+                'district' => $request->district,
+                'street' => $request->street,
+                'home' => $request->home,
                 'total_amount' => 0, // Will calculate total amount below
                 'payment_method' => $request->payment_method,
                 'shipping_method' => $request->shipping_method,
@@ -56,7 +66,7 @@ class OrderController extends Controller
                 // Check if there is enough stock
                 if ($product->stock < $quantity) {
                     DB::rollBack();
-                    return response()->json(['message' => "Not enough stock for product {$product->name}"], 400);
+                    return response()->json(['message' => "Bizda Yetarli mahsulot yo'q {$product->name}"], 400);
                 }
 
                 // Calculate total amount
@@ -74,6 +84,13 @@ class OrderController extends Controller
             $order->total_amount = $totalAmount;
             $order->save();
 
+            $carts = Cart::where('user_id', $user->id)->get();
+            foreach ($carts as $cart) {
+                if ($user->hasCart($cart->product_id)) {
+                    $user->carts()->detach($cart->product_id);
+                }
+            }
+
             DB::commit();
 
             return new OrderResource($order);
@@ -88,7 +105,7 @@ class OrderController extends Controller
     {
         $order = Order::with('products', 'user', 'address')->findOrFail($id);
 
-        return response()->json(['order' => $order], 200);
+        return response()->json(['order' => $order, 'success' => true], 200);
     }
 
     public function getUserOrders()
@@ -96,7 +113,7 @@ class OrderController extends Controller
         $user = Auth::user();
         $orders = $user->orders()->with('address', 'products', 'address')->get();
 
-        return response()->json(['orders' => $orders], 200);
+        return response()->json(['orders' => $orders, 'success' => true], 200);
     }
 
     public function cancelOrder($id)
@@ -109,6 +126,6 @@ class OrderController extends Controller
         $order->status = 'cancelled';
         $order->save();
 
-        return response()->json(['message' => 'Order cancelled successfully.'], 200);
+        return response()->json(['message' => 'Order cancelled successfully.', 'success' => true], 200);
     }
 }

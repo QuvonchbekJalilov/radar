@@ -24,35 +24,40 @@ class CartController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $product = Product::find($request->product_id);
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
 
-        if (!$product) {
+        $user = auth()->user();
+
+        if ($user->hasCart($validated['product_id'])) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product does not exist'
-            ], 404);
+                'message' => 'Product is already in cart'
+            ], 400);
         }
 
-        auth()->user()->carts()->attach($request->product_id);
+        $user->carts()->attach($validated['product_id']);
 
         return response()->json([
             'success' => true,
-            'message' => 'success'
+            'message' => 'Product added to cart successfully'
         ]);
     }
 
-
-    public function destroy($cart_id)
+    public function destroy($product_id)
     {
-        if (auth()->user()->hasCart($cart_id)) {
-            auth()->user()->carts()->detach($cart_id);
+        $user = auth()->user();
 
-            return response()->json(['success' => true]);
+        if ($user->hasCart($product_id)) {
+            $user->carts()->detach($product_id);
+
+            return response()->json(['success' => true, 'message' => 'Product removed from cart']);
         }
 
         return response()->json([
             'success' => false,
-            'message' => "Cart does not exist in this user"
+            'message' => "Product not found in the user's cart"
         ]);
     }
 }

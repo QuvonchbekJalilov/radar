@@ -5,15 +5,18 @@ use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\FavoriteController;
 use App\Http\Controllers\API\MainController;
 use App\Http\Controllers\API\OrderController;
-use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\UserAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/info', function (Request $request) {
-        return $request->user();
+        return response()->json([
+            'success' => true,
+            'user' => $request->user(),
+        ]);
     });
 
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -54,6 +57,6 @@ Route::get('/product', [MainController::class, 'product']);
 Route::get('/product/{category}', [MainController::class, 'productCategory']);
 Route::get('{id}/product', [MainController::class, 'singleProduct']);
 Route::get('/brand', [MainController::class, 'brand']);
-Route::post('/payme', [PaymentController::class, 'index']);
 
-
+Route::post('payment/request', [PaymentController::class, 'handleRequest'])->name('payment.request');
+Route::post('payment/notify', [PaymentController::class, 'handleNotify'])->name('payment.notify');

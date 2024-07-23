@@ -47,7 +47,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
     public function favorites()
@@ -61,12 +62,17 @@ class User extends Authenticatable
 
     public function carts()
     {
-        return $this->belongsToMany(Product::class);
+        // Specify the pivot table name and foreign key names
+        return $this->belongsToMany(Product::class, 'cart_user', 'user_id', 'product_id');
     }
-    public function hasCart($cart_id)
+
+
+    public function hasCart($product_id)
     {
-        return $this->carts()->where('product_id', $cart_id)->exists();
+        // Ensure it checks by product_id in the pivot
+        return $this->carts()->where('product_id', $product_id)->exists();
     }
+
     public function addresses()
     {
         return $this->hasMany(User_address::class);

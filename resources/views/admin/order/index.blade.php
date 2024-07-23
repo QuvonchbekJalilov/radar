@@ -66,9 +66,9 @@
                                         <th>{{ $order->total_amount }}</th>
                                         <th> 
                                             @if ($order->payment_status == "to'lanmagan" )
-                                             <p style="background-color: green; color: white; text-align: center; padding: 10px;" >{{ $order->payment_status }}</p>
+                                             <p style="background-color: red; color: white; text-align: center; padding: 10px;" >{{ $order->payment_status }}</p>
                                             @elseif ($order->payment_status == "to'langan" )
-                                            <p style="background-color: red; color: white; text-align: center; padding: 10px;">{{ $order->payment_status }}</p>
+                                            <p style="background-color: green; color: white; text-align: center; padding: 10px;">{{ $order->payment_status }}</p>
                                             @endif
                                         </th>
                                         <th>
