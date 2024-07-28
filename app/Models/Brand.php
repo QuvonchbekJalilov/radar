@@ -15,7 +15,7 @@ class Brand extends Model
         'title_en',
         'description_uz',
         'description_ru',
-        'description_en',
+        'description_en', 
         'image',
     ];
 

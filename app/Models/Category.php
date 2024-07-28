@@ -19,4 +19,8 @@ class Category extends Model
     public function products(){
         return $this->hasMany(Product::class);
     }
+
+    public function banners(){
+        return $this->hasMany(Banner::class);
+    }
 }

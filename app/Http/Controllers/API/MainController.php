@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BannerResource;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Banner;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -17,6 +19,12 @@ class MainController extends Controller
     {
         $categories = Category::all();
         return $this->response(CategoryResource::collection($categories));
+    }
+
+    public function banner(){
+        $banners = Banner::all();
+
+        return $this->response(BannerResource::collection($banners));
     }
 
     public function brand()

@@ -62,14 +62,13 @@ class User extends Authenticatable
 
     public function carts()
     {
-        // Specify the pivot table name and foreign key names
-        return $this->belongsToMany(Product::class, 'cart_user', 'user_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'cart_user', 'user_id', 'product_id')
+            ->withPivot('quantity')  // Ensure quantity is included in the pivot
+            ->withTimestamps();
     }
-
 
     public function hasCart($product_id)
     {
-        // Ensure it checks by product_id in the pivot
         return $this->carts()->where('product_id', $product_id)->exists();
     }
 

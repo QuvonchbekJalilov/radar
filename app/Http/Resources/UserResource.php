@@ -19,7 +19,7 @@ class UserResource extends JsonResource
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'phone_number' => $this->phone_number,
-            'image' => "https://www.work.dora.uz/public/storage/".$this->image,
+            'image' => "https://www.backend.elmag.uz/public/storage/".$this->image, 
             'role' => $this->role
         ];
     }

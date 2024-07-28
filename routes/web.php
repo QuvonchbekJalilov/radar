@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAddressController;
@@ -51,14 +53,16 @@ Route::middleware(['checkAdmin:admin', 'auth'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('brands', BrandController::class);
         // routes/web.php
-Route::get('/brands/data', [BrandController::class, 'getData'])->name('brands.data');
+        Route::get('/brands/data', [BrandController::class, 'getData'])->name('brands.data');
+        Route::resource('banners', BannerController::class);
+        Route::resource('discounts', DiscountController::class);
 
         Route::resource('product', ProductController::class);
         Route::resource('user', UserController::class);
         Route::resource('order', OrderController::class);
-
     });
 });
+Route::post('/payme', [PaymentController::class, 'index']);
 
 Route::get('/fail', [PaymentController::class, 'failure'])->name('payment.return');
 Route::get('/{lang}', function ($lang) {

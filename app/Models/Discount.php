@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Discount extends Model
 {
     use HasFactory;
-    protected $table = 'cart_user';
 
     protected $fillable = [
         'product_id',
-        'user_id',
-        'quantity',
+        'name',
+        'percentage',
+        'sum',
+        'from',
+        'to'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function product()
     {

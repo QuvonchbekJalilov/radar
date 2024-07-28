@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResources([
         'carts' => CartController::class,
     ]);
+    Route::post('/carts/update', [CartController::class, 'updateCart']);
 });
 
 
@@ -54,9 +55,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/user/{user}/addresses', [UserAddressController::class, 'getUserAddresses']);
 Route::get('/category', [MainController::class, 'category']);
 Route::get('/product', [MainController::class, 'product']);
-Route::get('/product/{category}', [MainController::class, 'productCategory']);
+Route::get('/category/{category}', [MainController::class, 'productCategory']);
 Route::get('{id}/product', [MainController::class, 'singleProduct']);
 Route::get('/brand', [MainController::class, 'brand']);
+Route::get('/banner', [MainController::class, 'banner']);
 
 Route::post('payment/request', [PaymentController::class, 'handleRequest'])->name('payment.request');
 Route::post('payment/notify', [PaymentController::class, 'handleNotify'])->name('payment.notify');
+
+Route::post('/payme', [PaymentController::class, 'index']);

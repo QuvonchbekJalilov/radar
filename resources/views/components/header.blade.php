@@ -35,6 +35,18 @@
                 </a>
             </li>
             <li class="menu-item">
+                <a href="{{ route('banners.index')}}" class="menu-link waves-effect waves-light">
+                    <span class="menu-icon"><i class="bx bx-category"></i></span>
+                    <span class="menu-text"> Bannerlar </span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('discounts.index')}}" class="menu-link waves-effect waves-light">
+                    <span class="menu-icon"><i class="bx bx-category"></i></span>
+                    <span class="menu-text"> Chegirmali Mahsulotlar </span>
+                </a>
+            </li>
+            <li class="menu-item">
                 <a href="{{ route('category.index')}}" class="menu-link waves-effect waves-light">
                     <span class="menu-icon"><i class="bx bx-category"></i></span>
                     <span class="menu-text"> Kategoriyalar </span>
